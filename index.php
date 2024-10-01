@@ -1,26 +1,19 @@
 <?php 
+
+    require_once __DIR__.'/partials/functions.php';
+
     $random_password = '';
     $password_length = 0;
 
     if (isset($_GET['password_lenght'])) { 
         $password_length = intval($_GET['password_lenght']);
-        echo "La password è stata inserita";
-    }
 
-    function randomPassword($length) {
-        $characters = 'abcdefghiklmnopqrstuvxyzABCDEFGHIKLMNOPQRSTUVXYZ1234567890!"$%^&*';
-        $charactersLength = strlen($characters);
-
-        $password = '';
-
-        for ($i = 0; $i < $length; $i++) { 
-            $password .= $characters[rand(0, $charactersLength - 1)];
+        if ($password_length >= 3 && $password_length <= 16) {
+            $random_password = randomPassword($password_length);
         }
-
-        return $password;
     }
 
-    $random_password = randomPassword($password_length);
+
 
 ?>
 
@@ -43,10 +36,16 @@
             <div>
                 <input type="submit" value="Genera random password">
             </div>
+            <?php
+                if($random_password != '') { 
+            ?>
             <div>
                 <p>Lunghezza password: <?php echo $password_length ?></p>
                 <p>Password generata: <?php  echo $random_password ?></p>
             </div>
+            <?php 
+                }
+            ?>
         </form>
     </body>
 </html>
